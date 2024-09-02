@@ -1,0 +1,45 @@
+public class DocumentEncryption {
+
+    public static String encryptWord(String input, int key) {
+        StringBuilder encryptedWord = new StringBuilder();
+
+        for (char c : input.toCharArray()) {
+            if (Character.isLetter(c)) {
+                boolean isLowerCase = Character.isLowerCase(c);
+                int charValue = Character.toLowerCase(c) - 'a';
+                int encryptedValue = (charValue + key) % 26;
+                char encryptedChar = (char) (encryptedValue + 'a');
+                if (isLowerCase) {
+                    encryptedWord.append(Character.toUpperCase(encryptedChar));
+                } else {
+                    encryptedWord.append(Character.toLowerCase(encryptedChar));
+                }
+            } else {
+                encryptedWord.append(c);
+            }
+        }
+
+        return encryptedWord.toString();
+    }
+
+    public static String encryptDocument(String input, int key) {
+        String[] words = input.split(" ");
+        StringBuilder encryptedDocument = new StringBuilder();
+
+        for (int i = 0; i < words.length; i++) {
+            encryptedDocument.append(encryptWord(words[i], key));
+            if (i < words.length - 1) {
+                encryptedDocument.append(" ");
+            }
+        }
+
+        return encryptedDocument.toString();
+    }
+
+    public static void main(String[] args) {
+        String input1 = "Wipro Tech";
+        int input2 = 20;
+        String encryptedDocument = encryptDocument(input1, input2);
+        System.out.println("Encrypted words: " + encryptedDocument);
+    }
+}
